@@ -38,3 +38,13 @@ func (c *Customer) validate() error {
 	}
 	return nil
 }
+
+func (c *Customer) Update(name, email string) error {
+	c.Name = name
+	c.Email = email
+	c.UpdatedAt = time.Now()
+	if err := c.validate(); err != nil {
+		return err
+	}
+	return nil
+}
