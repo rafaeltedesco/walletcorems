@@ -34,3 +34,20 @@ func TestUpdateCustomerWithInvalidArgs(t *testing.T) {
 	assert.NotNil(t, err)
 	assert.Equal(t, "Name is required!", err.Error())
 }
+
+func TestAddAccount(t *testing.T) {
+	customer, _ := NewCustomer("Rafael", "rafael@gmail.com")
+	account := NewAccount(customer)
+	err := customer.AddAccount(account)
+	assert.Nil(t, err)
+	assert.Len(t, customer.Accounts, 1)
+}
+
+func TestAddInvalidAccount(t *testing.T) {
+	customer, _ := NewCustomer("Rafael", "rafael@gmail.com")
+	otherCustomer, _ := NewCustomer("Miguel", "miguel@gmail.com")
+	otherAccount := NewAccount(otherCustomer)
+	err := customer.AddAccount(otherAccount)
+	assert.NotNil(t, err)
+	assert.Equal(t, "account doesn't belong to these customer", err.Error())
+}
