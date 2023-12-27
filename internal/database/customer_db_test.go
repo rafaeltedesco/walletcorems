@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	entity "github.com.br/rafaeltedesco/fc-walletcore/internal/entitiy"
+	"github.com/google/uuid"
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/stretchr/testify/suite"
 )
@@ -41,5 +42,14 @@ func (s *CustomerDBTestSuite) TestGet() {
 	s.Equal(customer.ID, customerDB.ID)
 	s.Equal(customer.Name, customerDB.Name)
 	s.Equal(customer.Email, customerDB.Email)
+}
 
+func (s *CustomerDBTestSuite) TestSave() {
+	customer := &entity.Customer{
+		ID:    uuid.New().String(),
+		Name:  "Rafael",
+		Email: "rafael@gmail.com",
+	}
+	err := s.customerDB.Save(customer)
+	s.Nil(err)
 }
