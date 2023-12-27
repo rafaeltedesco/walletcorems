@@ -10,6 +10,12 @@ type CustomerDB struct {
 	DB *sql.DB
 }
 
+func NewCustomerDB(db *sql.DB) *CustomerDB {
+	return &CustomerDB{
+		DB: db,
+	}
+}
+
 func (c *CustomerDB) Get(id string) (*entity.Customer, error) {
 	customer := &entity.Customer{}
 	stmt, err := c.DB.Prepare(`
@@ -28,7 +34,7 @@ func (c *CustomerDB) Get(id string) (*entity.Customer, error) {
 
 func (c *CustomerDB) Save(customer *entity.Customer) error {
 	stmt, err := c.DB.Prepare(`
-		INSERT INTO customers id, name, email, created_at)
+		INSERT INTO customers (id, name, email, created_at)
 		VALUES (?, ?, ?, ?)
 	`)
 	if err != nil {
