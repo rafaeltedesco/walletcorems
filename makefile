@@ -1,2 +1,2 @@
 test:
-	go test -v ./internal/**
+	go test -cover -v ./...
